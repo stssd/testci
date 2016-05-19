@@ -62,35 +62,35 @@ public class AppNavigationTest {
 
     @Test
     public void clickOnStatisticsNavigationItem_ShowsStatisticsScreen() {
-        fail("Implement step 9");
-//        // Open Drawer to click on navigation.
-//        onView(withId(R.id.drawer_layout))
-//                .check(matches(isClosed(Gravity.LEFT))) // Left Drawer should be closed.
-//                .perform(open()); // Open Drawer
-//
-//        // Start statistics screen.
-//        onView(withId(R.id.nav_view))
-//                .perform(navigateTo(R.id.statistics_navigation_menu_item));
-//
-//        // Check that statistics Activity was opened.
-//        String expectedNoStatisticsText = InstrumentationRegistry.getTargetContext()
-//                .getString(R.string.no_statistics_available);
-//        onView(withId(R.id.no_statistics)).check(matches(withText(expectedNoStatisticsText)));
+//        fail("Implement step 9");
+        // Open Drawer to click on navigation.
+        onView(withId(R.id.drawer_layout))
+                .check(matches(isClosed(Gravity.LEFT))) // Left Drawer should be closed.
+                .perform(open()); // Open Drawer
+
+        // Start statistics screen.
+        onView(withId(R.id.nav_view))
+                .perform(navigateTo(R.id.statistics_navigation_menu_item));
+
+        // Check that statistics Activity was opened.
+        String expectedNoStatisticsText = InstrumentationRegistry.getTargetContext()
+                .getString(R.string.no_statistics_available);
+        onView(withId(R.id.no_statistics)).check(matches(withText(expectedNoStatisticsText)));
     }
 
     @Test
     public void clickOnAndroidHomeIcon_OpensNavigation() {
-        fail("Implement step 9");
-//        // Check that left drawer is closed at startup
-//        onView(withId(R.id.drawer_layout))
-//                .check(matches(isClosed(Gravity.LEFT))); // Left Drawer should be closed.
-//
-//        // Open Drawer
-//        onView(withContentDescription("Navigate up")).perform(click());
-//
-//        // Check if drawer is open
-//        onView(withId(R.id.drawer_layout))
-//                .check(matches(isOpen(Gravity.LEFT))); // Left drawer is open open.
+//        fail("Implement step 9");
+        // Check that left drawer is closed at startup
+        onView(withId(R.id.drawer_layout))
+                .check(matches(isClosed(Gravity.LEFT))); // Left Drawer should be closed.
+
+        // Open Drawer
+        onView(withContentDescription("Navigate up")).perform(click());
+
+        // Check if drawer is open
+        onView(withId(R.id.drawer_layout))
+                .check(matches(isOpen(Gravity.LEFT))); // Left drawer is open open.
     }
 
 }
