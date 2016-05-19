@@ -23,16 +23,26 @@ dependencies:
 
 test:
     override:
+        - (./gradlew test assembleDebug -PdisablePreDex || ./gradlew test assembleDebug -PdisablePreDex)
+        - echo | android create avd -n custom-android23-googleapis -t "android-23" --abi google_apis/armeabi-v7a
         # start the emulator
-        - emulator -avd circleci-android22 -no-audio -no-window:
+        - emulator -avd custom-android23-googleapis -no-audio -no-window:
             background: true
             parallel: true
-        - bin/android-wait-for-emulator
+        - fb-adb start-server:
+            background: true
+        - circle-android wait-for-boot
         - sleep 30
-        - adb shell input keyevent 82
+        - fb-adb devices
+        # Unlock the lockscreen on the emulator
+        - fb-adb shell input keyevent 82
+        - fb-adb shell input keyevent 92
         # run tests  against the emulator.
+        - fb-adb rcmd screencap -p > $CIRCLE_ARTIFACTS/screen-$(date +"%T").png
+        # Note the espresso tests include code to unlock the emulator before running the tests
         - ./gradlew connectedAndroidTest -PdisablePreDex
-        # copy the build outputs to artifacts
+        - fb-adb rcmd screencap -p > $CIRCLE_ARTIFACTS/screen-$(date +"%T").png
+    post:
         - cp -r app/build/outputs $CIRCLE_ARTIFACTS
-        # copy the test results to the test results directory.
+        - find app/build/test-results -name "*.xml" -exec cp {} $CIRCLE_TEST_REPORTS/ \;
         - cp -r app/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
