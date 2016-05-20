@@ -9,15 +9,7 @@ machine:
 
 dependencies:
     pre:
-        - echo y | android update sdk --no-ui --all --filter tools,platform-tools,android-23
-        - echo y | android update sdk --no-ui --all --filter build-tools-23.0.3
-        - echo y | android update sdk --no-ui --all --filter android-23
-        - echo y | android update sdk --no-ui --all --filter tools
-        - echo y | android update sdk --no-ui --all --filter extra-android-m2repository
-        - echo y | android update sdk --no-ui --all --filter extra-android-support
-        - echo y | android update sdk --no-ui --all --filter extra-google-google_play_services
-        - echo y | android update sdk --no-ui --all --filter extra-google-m2repository
-        - sudo apt-get autoclean
+        - sudo apt-get clean
         - sudo apt-get update
         - sudo apt-get install g++
         - sudo apt-get install automake
@@ -44,6 +36,14 @@ dependencies:
         - git submodule update --init
         - autoreconf -ivf && ./configure && make
         - sudo make install
+        - echo y | android update sdk --no-ui --all --filter tools,platform-tools,android-23
+        - echo y | android update sdk --no-ui --all --filter build-tools-23.0.3
+        - echo y | android update sdk --no-ui --all --filter android-23
+        - echo y | android update sdk --no-ui --all --filter tools
+        - echo y | android update sdk --no-ui --all --filter extra-android-m2repository
+        - echo y | android update sdk --no-ui --all --filter extra-android-support
+        - echo y | android update sdk --no-ui --all --filter extra-google-google_play_services
+        - echo y | android update sdk --no-ui --all --filter extra-google-m2repository
     override:
         - chmod +x gradlew
         - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
