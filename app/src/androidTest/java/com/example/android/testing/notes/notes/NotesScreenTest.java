@@ -25,6 +25,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.RecyclerView;
@@ -113,7 +114,7 @@ public class NotesScreenTest {
 
         // Add note title and description
         onView(withId(R.id.add_note_title)).perform(typeText(newNoteTitle)); // Type new note title
-        onView(withId(R.id.add_note_description)).perform(typeText(newNoteDescription),
+        onView(withId(R.id.add_note_description)).perform(ViewActions.scrollTo(), typeText(newNoteDescription),
                 closeSoftKeyboard()); // Type new note description and close the keyboard
 
         // Save the note
