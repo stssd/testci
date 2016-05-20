@@ -9,14 +9,14 @@ machine:
 
 dependencies:
     pre:
-        - sudo apt-get clean
+        - sudo dpkg --configure -a
         - sudo apt-get update
         - sudo apt-get install g++
         - sudo apt-get install automake
         - sudo apt-get install autoconf
         - sudo apt-get install autoconf-archive
         - sudo apt-get install libtool
-        - sudo apt-get install libboost-all-dev
+        - sudo apt-get -f install libboost-all-dev
         - sudo apt-get install libevent-dev
         - sudo apt-get install libdouble-conversion-dev
         - sudo apt-get install libgoogle-glog-dev
