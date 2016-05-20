@@ -17,6 +17,32 @@ dependencies:
         - echo y | android update sdk --no-ui --all --filter extra-android-support
         - echo y | android update sdk --no-ui --all --filter extra-google-google_play_services
         - echo y | android update sdk --no-ui --all --filter extra-google-m2repository
+        - sudo apt-get update
+        - sudo apt-get install g++
+        - sudo apt-get install automake
+        - sudo apt-get install autoconf
+        - sudo apt-get install autoconf-archive
+        - sudo apt-get install libtool
+        - sudo apt-get install libboost-all-dev
+        - sudo apt-get install libevent-dev
+        - sudo apt-get install libdouble-conversion-dev
+        - sudo apt-get install libgoogle-glog-dev
+        - sudo apt-get install libflags-dev
+        - sudo apt-get install liblz4-dev
+        - sudo apt-get install liblzma-dev
+        - sudo apt-get install libsnappy-dev
+        - sudo apt-get install make
+        - sudo apt-get install zlib1g-dev
+        - sudo apt-get install binutils-dev
+        - sudo apt-get install libjemalloc-dev
+        - sudo apt-get install libssl-dev
+        - sudo apt-get install libiberty-dev
+        - sudo apt-get install libjsoncpp-dev
+        - git clone https://github.com/facebook/redex.git
+        - cd redex
+        - git submodule update --init
+        - autoreconf -ivf && ./configure && make
+        - sudo make install
     override:
         - chmod +x gradlew
         - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
@@ -46,6 +72,7 @@ test:
         - ./gradlew connectedAndroidTest -PdisablePreDex
         - fb-adb rcmd screencap -p > $CIRCLE_ARTIFACTS/screen-$(date +"%T").png
     post:
+        - redex app/build/outputs/apk/app-prod-debug.apk -o app/build/outputs/apk/app-redex.apk
         - cp -r app/build/outputs $CIRCLE_ARTIFACTS
         - find app/build/test-results -name "*.xml" -exec cp {} $CIRCLE_TEST_REPORTS/ \;
         - cp -r app/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
